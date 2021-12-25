@@ -1,7 +1,7 @@
-import UserProfile from '../components/profile/user-profile';
+import UserProfile from "../components/profile/user-profile";
 
-function ProfilePage() {
+const ProfilePage = () => {
   return <UserProfile />;
-}
+};
 
 export default ProfilePage;
