@@ -71,7 +71,7 @@ const AuthForm = () => {
       const timer = setTimeout(() => {
         setShowInfo(false);
         setError("");
-      }, 5000);
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [error]);
@@ -103,7 +103,7 @@ const AuthForm = () => {
             {isLogin ? "Create new account" : "Login with existing account"}
           </button>
         </div>
-        {error && setShowInfo && <p>{error}</p>}
+        {error && showInfo && <p className='text-red-500'>{error}</p>}
       </form>
     </section>
   );
