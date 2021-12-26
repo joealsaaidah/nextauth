@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import classes from "./auth-form.module.css";
 
 import { signIn } from "next-auth/react";
@@ -24,6 +24,8 @@ const AuthForm = () => {
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
   const router = useRouter();
+  const [error, setError] = useState("");
+  const [showInfo, setShowInfo] = useState(false);
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -44,6 +46,11 @@ const AuthForm = () => {
         password: enteredPassword,
       });
 
+      if (result.error) {
+        console.log(result.error);
+        setError(result.error);
+        setShowInfo(true);
+      }
       if (!result.error) {
         // set some auth state
         router.replace("/profile");
@@ -54,9 +61,20 @@ const AuthForm = () => {
         console.log("result", result);
       } catch (error) {
         console.log(error);
+        setError(error.message);
       }
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setShowInfo(false);
+        setError("");
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
 
   return (
     <section className={classes.auth}>
@@ -85,6 +103,7 @@ const AuthForm = () => {
             {isLogin ? "Create new account" : "Login with existing account"}
           </button>
         </div>
+        {error && setShowInfo && <p>{error}</p>}
       </form>
     </section>
   );

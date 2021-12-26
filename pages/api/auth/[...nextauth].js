@@ -1,6 +1,8 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { verifyPassword } from "../../../lib/auth";
+/* import connectToDatabase from "../../../lib/db"; */
+/* import { MongoDBAdapter } from "@next-auth/mongodb-adapter"; */
 import connectToDatabase from "../../../lib/db";
 
 export default NextAuth({
@@ -8,6 +10,7 @@ export default NextAuth({
     jwt: true,
   },
   secret: process.env.SECRET,
+  /* adapter: MongoDBAdapter(await connectToDatabase()), */
   providers: [
     CredentialsProvider({
       async authorize(credentials) {
